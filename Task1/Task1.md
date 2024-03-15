@@ -1,6 +1,7 @@
 # Solution for `Task1`
 
 ## Assignment
+
 ```
 Our client, the stock advisory company, provides services of stock market analyses,
 stock monitoring and stock recommendation.
@@ -26,99 +27,143 @@ This company has been our customer for a long time. This is not a fixed scope pr
 Both parties agree to cooperate and adjust plans as needed in an agile way.
 Our ultimate goal is satisfied customer.
 ```
+
 ---
+
 ## Our solution
 
 # Event storming
 
-![Big picture ES](imgs/Big_picture.png)
----
+## ![Big picture ES](imgs/Big_picture.png)
+
 ![Process modeling ES](imgs/Process_modeling.png)
 
 # User stories
 
-
-
 ## User Stories for Account Management
 
 ---
+
 ## User Registration
 
 **As a prospective user, I want to register for an account, so that I can access restricted features.**
 
 ### Acceptance Criteria:
+
 - Works with standard email and password combination.
 - Provides password strength feedback.
 - Confirms email address through verification email.
 
 ### Out of scope:
--  Registration using OAuth services like Google or Facebook.
+
+- Registration using OAuth services like Google or Facebook.
 - Two-factor authentication setup during initial registration.
 
 ### Notes:
+
 - Ensure GDPR compliance for user data collection.
 
 ### Estimation:
+
 Planning poker: 5 (considering standard complexity for user registration).
 
 ---
+
 ## User Login
 
 **As a registered user, I want to be able to log in to my account, so that I can access my personal settings and data.**
 
 ### Acceptance Criteria:
+
 - Works with email and password.
 - Includes "Forgot Password" feature.
 
 ### Out of scope:
+
 - Biometric login options.
 - "Remember me" feature for device authorization.
 - Supports OAuth login methods like Google or Facebook.
 
 ### Notes:
+
 - Implement login rate-limiting to prevent brute force attacks.
 
 ### Estimation:
+
 Planning poker: 3
 
 ---
+
 ## Change User Email
 
 **As a logged-in user, I want to be able to change my registered email address, so that I can keep my contact information up to date.**
 
 ### Acceptance Criteria:
+
 - Users can initiate email change from account settings.
 - Verification of the new email address is required.
 - Users are notified at their old email address about the change.
 - Immediate session invalidation after email change for security.
 
 ### Out of scope:
+
 - Changing other personal information at the same time as email.
 - Email change via customer support.
 
 ### Notes:
+
 - Any changes should be logged for audit purposes.
 - Provide clear instructions for email verification process.
 
 ### Estimation:
+
 Planning poker: 2 (straightforward process but requires proper security measures).
 
 ---
-## Delete User Account
 
-**As a user concerned about my privacy, I want the option to delete my account, so that all my data is removed from the system.**
+## Deactivate User Account
+
+**As a user, I want the option to deactivated my account, so that I won't receive any more e-mail reports.**
 
 ### Acceptance Criteria:
-- Provide a clear and easy way to initiate account deletion from settings.
-- Confirm the deletion action via password.
-- Inform the user about the data that will be removed and any data retention policies.
+
+- Provide a clear and easy way to initiate account deactivation from settings.
+- Confirm the deactivation action via password.
+- Inform the user that they won't receive any more reports.
 
 ### Out of scope:
-- Deleting user data that is required to be kept by law.
+
+- Account recovery after deactivating.
 
 ### Notes:
-- Account deletion must comply with the right to be forgotten under GDPR.
+
+- Clear instructions and warnings of deactivating their account.
+- The platform should comply with relevant privacy regulations regarding user data deletion
 
 ### Estimation:
-Planning poker: 8 (due to the need for careful handling of data and legal compliance).
 
+Planning poker: 4
+
+---
+
+## Subscribe to report
+
+**As a logged-in user, I want to be able to subscribe to e-mail portfolio reports, so that I can keep up with the portfolio updates outside of the website comfortably in my e-mail.**
+
+### Acceptance Criteria:
+
+- The feature should be accessible only to logged-in users.
+- Notify the user on their e-mail about the creation of a new subscription.
+- User is able to view the current subscription.
+
+### Out of scope:
+
+- Subscription management section within users account settings.
+
+### Notes:
+
+- Ensure the emails are well-formatted, concise, and contain only relevant information.
+
+### Estimation:
+
+Planning poker: 3
