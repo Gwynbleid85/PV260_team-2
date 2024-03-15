@@ -1,4 +1,5 @@
 ![PV260 - Team2](doc/github-header-image.png)
+
 This repository contains solution for projects from PV260 subject.
 
 ---
