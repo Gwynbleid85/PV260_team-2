@@ -167,3 +167,26 @@ Planning poker: 4
 ### Estimation:
 
 Planning poker: 3
+
+
+---
+
+## Show report
+
+**As a logged-in user, I want to view detailed reports of ARK Invest ETFs holdings, so that I can make informed investment decisions.**
+
+### Acceptance Criteria:
+
+- The feature should be accessible only to logged-in users.
+- Users can see report details on their main dashboard
+
+### Out of scope:
+ - Predictive analytics or investment advice based on report data.
+ - Integration with external portfolio management tools or platforms.
+ 
+### Notes:
+- Consider implementing a responsive design for the reports to ensure usability across different devices, including tablets and smartphones.
+
+### Estimation:
+
+Planning poker: 3
