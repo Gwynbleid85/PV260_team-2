@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", "{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reports", "Reports\Reports.csproj", "{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
