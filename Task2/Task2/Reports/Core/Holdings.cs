@@ -1,3 +1,5 @@
+using Reports.Dto;
+
 namespace Reports.Infrastructure;
 
 public record Holdings
@@ -9,7 +11,7 @@ public record Holdings
     public string Cusip { get; set; }
     public int Shares { get; set; }
     
-    public int SharesDifference { get; set; } = 0;
-    public double MarketValue { get; set; }
+    public int SharesDifference { get; set; }
+    public MarketValueCurrency MarketValue { get; set; } = new ();
     public double Weight { get; set; }
 }

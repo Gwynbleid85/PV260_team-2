@@ -13,10 +13,15 @@ namespace Reports;
 
 public static class DependencyInjection
 {
+    // TODO: move to a configuration class
+    public const string ArkClientName = "ArkClient";
+
     public static IServiceCollection AddReports(this IServiceCollection services, IConfiguration configuration)
     {
+        var reportsBaseUrl = configuration.GetSection("ReportsSettings")["BaseUrl"];
         var dbSchemeName = configuration.GetSection("DbSettings")["DbSchemeName"];
         var connectionString = configuration.GetSection("DbSettings:ConnectionStrings")["MartenDb"];
+        Guard.IsNotNullOrEmpty(reportsBaseUrl, "Reports base url");
         Guard.IsNotNullOrEmpty(dbSchemeName, "Db scheme");
         Guard.IsNotNullOrEmpty(connectionString, "Connection string");
 
@@ -25,10 +30,19 @@ public static class DependencyInjection
             opts.Connection(connectionString);
             opts.DatabaseSchemaName = dbSchemeName;
         });
+        
+        services.AddHttpClient(ArkClientName, client =>
+        {
+            // TODO: move this to configuration
+            client.BaseAddress = new Uri(reportsBaseUrl);
+            // TODO: simplify/to configuration ?
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+        });
 
         // Add custom services
-        services.AddTimeProvider();
-        services.AddReportGenerator();
+        services
+            .AddSingleton<ITimeProvider, TimeProvider>()
+            .AddSingleton<IReportGenerator, CsvReportGenerator>();
 
         return services;
     }
@@ -38,15 +52,5 @@ public static class DependencyInjection
         app.MapWolverineEndpoints(opts => { opts.UseFluentValidationProblemDetailMiddleware(); });
 
         return app;
-    }
-
-    private static void AddTimeProvider(this IServiceCollection services)
-    {
-        services.AddSingleton<ITimeProvider>(sp => new TimeProvider());
-    }
-
-    private static void AddReportGenerator(this IServiceCollection services)
-    {
-        services.AddSingleton<IReportGenerator>(sp => new ReportGenerator());
     }
 }
