@@ -1,19 +1,27 @@
 ﻿@page "/history"
 @rendermode InteractiveServer
 
+@using WebApp.Api
+@inject IReportsClient reportsClient;
+
 <PageTitle>History</PageTitle>
 
-@if (history == null) {
+@if (isLoading) {
     <span>Loading...</span>
 }
 else
 {
     <div style="display: flex; flex-direction: column; gap: 16px;">
-    @foreach(var item in history)
-    {
-        <a href="/reports" class="history-item">
-            <b>@item</b>
-        </a>
-    }   
+        @if (history.Count == 0)
+        {
+            <span>No history.</span>
+        }
+        @foreach (var report in history)
+        {
+            <div class="history-item">
+                <b>@report.Month.ToString("00") - @report.Year</b>
+                <ReportTables Report="report" />
+            </div>
+        }
     </div>
 }

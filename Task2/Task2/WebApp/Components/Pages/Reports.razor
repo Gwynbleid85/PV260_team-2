@@ -2,6 +2,9 @@
 @page "/"
 @attribute [StreamRendering]
 
+@using WebApp.Api
+@inject IReportsClient reportsClient;
+
 <PageTitle>Reports</PageTitle>
 
 <h1>Reports</h1>
@@ -9,70 +12,5 @@
     <span>Loading...</span>
 } else
 {
-    <h4>New positions</h4>
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Company name</th>
-            <th>Ticker</th>
-            <th>Shares</th>
-            <th>Weight (%)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var holding in report.NewPositions)
-        {
-            <tr>
-                <td>@holding.Company</td>
-                <td>@holding.Ticker</td>
-                <td>@holding.Shares</td>
-                <td>@holding.Weight</td>
-            </tr>
-        }
-    </tbody>
-</table>
-<h4>Increased positions</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Company name</th>
-            <th>Ticker</th>
-            <th>Shares <i class="fa-solid fa-caret-up"></i> (x%)</th>
-            <th>Weight (%)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var holding in report.IncreaedPositions)
-        {
-            <tr>
-                <td>@holding.Company</td>
-                <td>@holding.Ticker</td>
-                <td>@holding.Shares</td>
-                <td>@holding.Weight</td>
-            </tr>
-        }
-    </tbody>
-</table>
-<h4>Reduces positions</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Company name</th>
-            <th>Ticker</th>
-                <th>Shares <i class="fa-solid fa-caret-down"></i> (x%)</th>
-            <th>Weight (%)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var holding in report.ReducedPositions)
-        {
-            <tr>
-                <td>@holding.Company</td>
-                <td>@holding.Ticker</td>
-                <td>@holding.Shares</td>
-                <td>@holding.Weight</td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <ReportTables Report="report" />
 }
