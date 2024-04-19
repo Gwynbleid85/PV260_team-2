@@ -11,6 +11,8 @@ namespace Reports.Infrastructure;
 
 public class CsvReportGenerator : IReportGenerator
 {
+    private static readonly List<string> SupportedHoldingCultures = ["en-US"];
+
     private readonly string csvRelativeUrl;
     private readonly IHttpClientFactory httpClientFactory;
     
@@ -111,16 +113,26 @@ public class CsvReportGenerator : IReportGenerator
 
     private List<Holdings> ParseHoldingsDtos(List<HoldingsDto> holdingsDtos)
     {
-        // TODO: add mapper
+        // TODO: extract this and related methods to mapper configuration or a parser service?
         return holdingsDtos.Select(holdingsDto => ParseHoldingsDto(holdingsDto)).ToList();
     }
 
     private Holdings ParseHoldingsDto(HoldingsDto holdingsDto)
     {
-        var date = DateOnly.Parse(holdingsDto.Date);
-        var shares = int.Parse(holdingsDto.Shares.Replace(",", ""));
-        var marketValue = double.Parse(holdingsDto.MarketValue.Replace("$", "").Replace(",", ""));
-        var weight = double.Parse(holdingsDto.Weight.Replace("%", ""));
+        // get supported culture that uses the specific holding's currency symbol
+        var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+        var culture = allCultures
+            .Where(x => SupportedHoldingCultures.Contains(x.Name))
+            .FirstOrDefault(c => holdingsDto.MarketValue.Contains(c.NumberFormat.CurrencySymbol));
+        
+        Guard.IsNotNull(culture, "Holding's culture");
+        
+        var date = DateOnly.Parse(holdingsDto.Date, culture);
+        var shares = int.Parse(holdingsDto.Shares, NumberStyles.AllowThousands, culture);
+        var marketValue = double.Parse(holdingsDto.MarketValue,
+            NumberStyles.AllowThousands | NumberStyles.AllowCurrencySymbol | NumberStyles.AllowDecimalPoint,
+            culture);
+        var weight = double.Parse(holdingsDto.Weight.Replace(culture.NumberFormat.PercentSymbol, ""), culture);
 
         return new Holdings
         {
@@ -130,7 +142,11 @@ public class CsvReportGenerator : IReportGenerator
             Ticker = holdingsDto.Ticker,
             Cusip = holdingsDto.Cusip,
             Shares = shares,
-            MarketValue = new MarketValueCurrency(), // TODO: add value and currency
+            MarketValue = new MarketValueCurrency
+            {
+                Value = marketValue,
+                Currency = culture.NumberFormat.CurrencySymbol
+            },
             Weight = weight
         };
     }
