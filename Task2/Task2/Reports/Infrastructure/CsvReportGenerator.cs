@@ -28,8 +28,7 @@ public class CsvReportGenerator : IReportGenerator
     {
         var csvContent = await GetCsvAsync(csvRelativeUrl);
 
-        var currentHoldingsDtos = ParseCsv(csvContent);
-        var currentHoldings= ParseHoldingsDtos(currentHoldingsDtos);
+        var currentHoldings = ParseCsvDocument(csvContent);
 
         var oldHoldings = previousReport?.IncreaedPositions
             .Concat(previousReport.ReducedPositions)
@@ -97,7 +96,7 @@ public class CsvReportGenerator : IReportGenerator
         }
     }
 
-    private List<HoldingsDto> ParseCsv(string csvContent)
+    private List<Holdings> ParseCsvDocument(string csvContent)
     {
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
@@ -108,16 +107,12 @@ public class CsvReportGenerator : IReportGenerator
         using var reader = new StringReader(csvContent);
         using var csv = new CsvReader(reader, config);
         
-        return csv.GetRecords<HoldingsDto>().ToList();
+        return csv.GetRecords<HoldingsDto>()
+            .Select(holdingsDto => ParseHoldings(holdingsDto))
+            .ToList();
     }
 
-    private List<Holdings> ParseHoldingsDtos(List<HoldingsDto> holdingsDtos)
-    {
-        // TODO: extract this and related methods to mapper configuration or a parser service?
-        return holdingsDtos.Select(holdingsDto => ParseHoldingsDto(holdingsDto)).ToList();
-    }
-
-    private Holdings ParseHoldingsDto(HoldingsDto holdingsDto)
+    private Holdings ParseHoldings(HoldingsDto holdingsDto)
     {
         // get supported culture that uses the specific holding's currency symbol
         var allCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
@@ -126,14 +121,14 @@ public class CsvReportGenerator : IReportGenerator
             .FirstOrDefault(c => holdingsDto.MarketValue.Contains(c.NumberFormat.CurrencySymbol));
         
         Guard.IsNotNull(culture, "Holding's culture");
-        
+
         var date = DateOnly.Parse(holdingsDto.Date, culture);
         var shares = int.Parse(holdingsDto.Shares, NumberStyles.AllowThousands, culture);
         var marketValue = double.Parse(holdingsDto.MarketValue,
             NumberStyles.AllowThousands | NumberStyles.AllowCurrencySymbol | NumberStyles.AllowDecimalPoint,
             culture);
         var weight = double.Parse(holdingsDto.Weight.Replace(culture.NumberFormat.PercentSymbol, ""), culture);
-
+        
         return new Holdings
         {
             Date = date,
