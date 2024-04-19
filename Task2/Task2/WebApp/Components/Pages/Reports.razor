@@ -8,8 +8,9 @@
 <PageTitle>Reports</PageTitle>
 
 <h1>Reports</h1>
-@if(report == null) {
-    <span>Loading...</span>
+@if (report == null || isEmpty)
+{
+    <span>Not reports available...</span>
 } else
 {
     <ReportTables Report="report" />

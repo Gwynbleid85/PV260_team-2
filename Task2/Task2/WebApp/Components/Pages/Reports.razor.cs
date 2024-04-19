@@ -7,10 +7,15 @@ public partial class Reports
     private Api.Report report;
 
     private bool isLoading = true;
-
+    private bool isEmpty = false;
     protected override async Task OnInitializedAsync()
     {
-        report = await reportsClient.CurrentAsync();
+        try
+        {
+            report = await reportsClient.CurrentAsync();
+        } catch(Exception ex) {
+            isEmpty = true;
+        }
         isLoading = false;
     }
 }
