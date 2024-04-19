@@ -11,7 +11,7 @@ public record Holdings
     public string Cusip { get; set; }
     public int Shares { get; set; }
     
-    public int SharesDifference { get; set; }
+    public int SharesDifference { get; set; } // TODO: this should be percentage change? we shouldn't calculate it on FE
     public MarketValueCurrency MarketValue { get; set; } = new ();
     public double Weight { get; set; }
 }
