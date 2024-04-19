@@ -1,8 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Host", "Host\Host.csproj", "{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "Host\Host.csproj", "{DB9BA249-5E1D-4806-A7F9-BA9F46CC7747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reports", "Reports\Reports.csproj", "{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Reports", "Reports\Reports.csproj", "{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{C44F02B3-4806-4898-BA5A-4AA52470F669}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +23,15 @@ Global
 		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE4747D1-9A57-4E3A-8036-1BB4E034BAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C44F02B3-4806-4898-BA5A-4AA52470F669}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C44F02B3-4806-4898-BA5A-4AA52470F669}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C44F02B3-4806-4898-BA5A-4AA52470F669}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C44F02B3-4806-4898-BA5A-4AA52470F669}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E358C952-7A9F-4C56-98E6-51622248EAA5}
 	EndGlobalSection
 EndGlobal

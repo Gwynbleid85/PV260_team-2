@@ -1,0 +1,19 @@
+﻿@page "/history"
+@rendermode InteractiveServer
+
+<PageTitle>History</PageTitle>
+
+@if (history == null) {
+    <span>Loading...</span>
+}
+else
+{
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+    @foreach(var item in history)
+    {
+        <a href="/reports" class="history-item">
+            <b>@item</b>
+        </a>
+    }   
+    </div>
+}
