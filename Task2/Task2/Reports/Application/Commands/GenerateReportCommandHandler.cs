@@ -20,8 +20,12 @@ public class GenerateReportCommandHandler
     public static async Task<ReportGenerated> Handle(GenerateReportCommand command, IReportGenerator reportGenerator,
         IDocumentSession session, CancellationToken cancellationToken)
     {
-        var report = reportGenerator.GenerateReport(command.Year, command.Month);
-
+        var previousMonthDate = new DateTime(command.Year, command.Month, 1)
+            .AddMonths(-1);
+        
+        var previousReport = await session.QueryAsync(new GetReportQuery(previousMonthDate), cancellationToken);
+        var report = await reportGenerator.GenerateReportAsync(command.Year, command.Month, previousReport);
+        
         session.Store(report);
         await session.SaveChangesAsync(cancellationToken);
 

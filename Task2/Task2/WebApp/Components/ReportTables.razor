@@ -1,0 +1,68 @@
+<div class="report-table">
+    <h4>New positions</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Company name</th>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Weight (%)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var holding in Report.NewPositions)
+        {
+            <tr>
+                <td>@holding.Company</td>
+                <td>@holding.Ticker</td>
+                <td>@holding.Shares.ToString("N0")</td>
+                <td>@holding.Weight</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <h4>Increased positions</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Company name</th>
+            <th>Ticker</th>
+            <th>Shares <i class="fa-solid fa-caret-up"></i> (x%)</th>
+            <th>Weight (%)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var holding in Report.IncreaedPositions)
+        {
+            <tr>
+                <td>@holding.Company</td>
+                <td>@holding.Ticker</td>
+                <td>@holding.Shares.ToString("N0") (@holding.SharesDifference)</td>
+                <td>@holding.Weight</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <h4>Reduces positions</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Company name</th>
+            <th>Ticker</th>
+            <th>Shares <i class="fa-solid fa-caret-down"></i> (x%)</th>
+            <th>Weight (%)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var holding in Report.ReducedPositions)
+        {
+            <tr>
+                <td>@holding.Company</td>
+                <td>@holding.Ticker</td>
+                <td>@holding.Shares.ToString("N0") (@holding.SharesDifference)</td>
+                <td>@holding.Weight</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

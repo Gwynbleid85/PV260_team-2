@@ -4,5 +4,5 @@ namespace Reports.Application.ServiceInterfaces;
 
 public interface IReportGenerator
 {
-    Report GenerateReport(int year, int month);
+    Task<Report> GenerateReportAsync(int year, int month, Report? previousReport);
 }
