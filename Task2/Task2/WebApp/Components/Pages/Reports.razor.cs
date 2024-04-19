@@ -8,14 +8,20 @@ public partial class Reports
 
     private bool isLoading = true;
     private bool isEmpty = false;
+    
     protected override async Task OnInitializedAsync()
     {
         try
         {
             report = await reportsClient.CurrentAsync();
-        } catch(Exception ex) {
+        }
+        catch (Exception ex)
+        {
             isEmpty = true;
         }
-        isLoading = false;
+        finally
+        {
+            isLoading = false;
+        }
     }
 }
