@@ -1,18 +1,36 @@
 ﻿@page "/reports"
 @page "/"
-@attribute [StreamRendering]
+@rendermode InteractiveServer
 
 @using WebApp.Api
 @inject IReportsClient reportsClient;
 
 <PageTitle>Reports</PageTitle>
 
-<h1>Reports</h1>
+<div style="display: flex; justify-content: space-between;">
+    <h1>Reports</h1>
+    <div style="display: flex; flex-direction: column; align-items: end;">
+        <button @onclick="async () => await GenerateReport()"
+                disabled="@isGeneratingReport"
+                style="border-radius: 8px; width: 160px; height: 60px">
+            @if (isGeneratingReport)
+            {
+                <span>Loading...</span>
+            }
+            else
+            {
+                <span>Generate report</span>
+            }
+        </button>
+        <span style="color: red;">@error</span>
+    </div>
+</div>
+
 @if (isLoading)
 {
     <span>Loading...</span>
 }
-else if (isEmpty)
+else if (!currentReportExists)
 {
     <span>No reports available.</span>
 } else
