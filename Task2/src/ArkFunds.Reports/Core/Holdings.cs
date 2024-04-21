@@ -1,6 +1,4 @@
-using ArkFunds.Reports.Dto;
-
-namespace ArkFunds.Reports.Infrastructure;
+namespace ArkFunds.Reports.Core;
 
 public record Holdings
 {
@@ -11,7 +9,8 @@ public record Holdings
     public string Cusip { get; set; }
     public int Shares { get; set; }
     
-    public int SharesDifference { get; set; } // TODO: this should be percentage change? we shouldn't calculate it on FE
+    public int SharesDifference { get; set; }
+    public double SharesPercentageChange { get; set; }
     public MarketValueCurrency MarketValue { get; set; } = new ();
     public double Weight { get; set; }
 }

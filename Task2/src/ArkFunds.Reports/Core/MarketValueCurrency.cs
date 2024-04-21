@@ -1,4 +1,4 @@
-namespace ArkFunds.Reports.Dto;
+namespace ArkFunds.Reports.Core;
 
 public class MarketValueCurrency
 {

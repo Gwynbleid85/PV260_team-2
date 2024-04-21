@@ -662,6 +662,9 @@ namespace ArkFunds.App.Web.Api
         [System.Text.Json.Serialization.JsonPropertyName("sharesDifference")]
         public int SharesDifference { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("sharesPercentageChange")]
+        public double SharesPercentageChange { get; set; }
+
         [System.Text.Json.Serialization.JsonPropertyName("marketValue")]
         public MarketValueCurrency MarketValue { get; set; }
 

@@ -1,8 +1,8 @@
 using CsvHelper.Configuration.Attributes;
 
-namespace ArkFunds.Reports.Dto
+namespace ArkFunds.Reports.Core.Dto
 {
-    public class HoldingsDto
+    public class CsvHoldingsDto
     {
         [Name("date")] 
         public string Date { get; set; }
