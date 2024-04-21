@@ -2,5 +2,6 @@ namespace ArkFunds.Reports.Core.Enums;
 
 public enum ReportSourceType
 {
-    Csv = 0
+    Http = 0,
+    File
 }

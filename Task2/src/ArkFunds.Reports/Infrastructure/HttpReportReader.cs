@@ -2,7 +2,7 @@ using ArkFunds.Reports.Application.ServiceInterfaces;
 
 namespace ArkFunds.Reports.Infrastructure;
 
-public class CsvReportReader(IHttpClientFactory httpClientFactory) : IReportReader
+public class HttpReportReader(IHttpClientFactory httpClientFactory) : IReportReader
 {
     public async Task<string> GetAsync(string path)
     {

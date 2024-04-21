@@ -42,12 +42,20 @@ public static class DependencyInjection
         
         var sourceType = configuration.GetSection("ReportsSettings").GetValue<ReportSourceType?>("SourceType");
         Guard.IsNotNull(sourceType, "Report source type");
+
+        services
+            .AddSingleton<IReportParser, CsvReportParser>();
         
-        if (sourceType == ReportSourceType.Csv)
+        switch (sourceType)
         {
-            services
-                .AddSingleton<IReportParser, CsvReportParser>()
-                .AddSingleton<IReportReader, CsvReportReader>();
+            case ReportSourceType.Http:
+                services.AddSingleton<IReportReader, HttpReportReader>();
+                break;
+            case ReportSourceType.File:
+                services.AddSingleton<IReportReader, FileReportReader>();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         return services;
