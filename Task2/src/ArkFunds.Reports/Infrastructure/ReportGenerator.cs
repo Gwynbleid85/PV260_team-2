@@ -70,11 +70,13 @@ public class ReportGenerator : IReportGenerator
             } else if (holding.Shares < oldHolding.Shares)
             {
                 holding.SharesDifference = holding.Shares - oldHolding.Shares;
+                holding.SharesPercentageChange = (double)holding.Shares / oldHolding.Shares - 1;
                 reducedPositions.Add(holding);
             }
             else
             {
                 holding.SharesDifference = holding.Shares - oldHolding.Shares;
+                holding.SharesPercentageChange = 1 - (double)oldHolding.Shares / holding.Shares;
                 increasedPositions.Add(holding);
             }
         }
