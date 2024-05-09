@@ -3,7 +3,6 @@ using ArkFunds.Reports.Application.Queries;
 using ArkFunds.Reports.Application.ServiceInterfaces;
 using ArkFunds.Reports.Core;
 using ArkFunds.Reports.Core.Events;
-using Marten;
 using Wolverine;
 using Wolverine.Http;
 
@@ -15,42 +14,49 @@ public class ReportsEndpoint
     /// <summary>
     /// Get current report
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="bus"></param>
     /// <param name="timeProvider"></param>
     /// <remarks>User has to be logged in for this endpoint</remarks>
     /// <returns>Current report</returns>
     [WolverineGet("/reports/current")]
-    public static async Task<Report?> GetCurrentReport(IQuerySession session, ITimeProvider timeProvider)
+    public static async Task<Report?> GetCurrentReport(IMessageBus bus, ITimeProvider timeProvider)
     {
-        var report = await session.QueryAsync(new GetCurrentReportQuery(timeProvider.GetCurrentTime()));
-        return report.FirstOrDefault();
+        var query = new GetCurrentReportQuery(timeProvider.GetCurrentTime());
+
+        var queryResponse = await bus.InvokeAsync<GetCurrentReportQuery.Response>(query);
+        return queryResponse.Report;
     }
 
     /// <summary>
     /// Get three months old report
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="bus"></param>
     /// <param name="timeProvider"></param>
     /// <returns>Three month old report </returns>
     [WolverineGet("/reports/three-months-old")]
-    public static async Task<Report?> Get3MonthsOldReport(IQuerySession session,
+    public static async Task<Report?> GetThreeMonthsOldReport(IMessageBus bus,
         ITimeProvider timeProvider)
     {
-        var report = await session.QueryAsync(new GetThreeMonthOldReportQuery(timeProvider.GetCurrentTime()));
-        return report.FirstOrDefault();
+        var query = new GetThreeMonthOldReportQuery(timeProvider.GetCurrentTime());
+
+        var queryResponse = await bus.InvokeAsync<GetThreeMonthOldReportQuery.Response>(query);
+        return queryResponse.Report;
     }
 
     //TODO: Add authorization
     /// <summary>
     /// Get report history
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="bus"></param>
     /// <remarks>User has to be logged in for this endpoint</remarks>
     /// <returns>Report history</returns>
     [WolverineGet("/reports/history")]
-    public static async Task<IEnumerable<Report>> GetReportHistory(IQuerySession session)
+    public static async Task<IEnumerable<Report>> GetReportHistory(IMessageBus bus)
     {
-        return await session.QueryAsync(new GetReportHistoryQuery());
+        var query = new GetReportHistoryQuery();
+
+        var queryResponse = await bus.InvokeAsync<GetReportHistoryQuery.Response>(query);
+        return queryResponse.ReportHistory;
     }
 
     //TODO: Remove after testing

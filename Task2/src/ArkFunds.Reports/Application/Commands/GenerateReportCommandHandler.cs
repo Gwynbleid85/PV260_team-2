@@ -1,9 +1,9 @@
-using ArkFunds.Reports.Application.Queries;
-using ArkFunds.Reports.Application.ServiceInterfaces;
-using ArkFunds.Reports.Core.Events;
 using CommunityToolkit.Diagnostics;
 using Mapster;
 using Marten;
+using ArkFunds.Reports.Application.Queries.CompiledQueries;
+using ArkFunds.Reports.Application.ServiceInterfaces;
+using ArkFunds.Reports.Core.Events;
 
 namespace ArkFunds.Reports.Application.Commands;
 
@@ -22,10 +22,10 @@ public class GenerateReportCommandHandler
     {
         var previousMonthDate = new DateTime(command.Year, command.Month, 1)
             .AddMonths(-1);
-        
+
         var previousReport = await session.QueryAsync(new GetReportQuery(previousMonthDate), cancellationToken);
         var report = await reportGenerator.GenerateReportAsync(command.Year, command.Month, previousReport);
-        
+
         session.Store(report);
         await session.SaveChangesAsync(cancellationToken);
 
