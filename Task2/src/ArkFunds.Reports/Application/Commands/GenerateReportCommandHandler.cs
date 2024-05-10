@@ -3,7 +3,9 @@ using Mapster;
 using Marten;
 using ArkFunds.Reports.Application.Queries.CompiledQueries;
 using ArkFunds.Reports.Application.ServiceInterfaces;
+using ArkFunds.Reports.Core;
 using ArkFunds.Reports.Core.Events;
+using Wolverine;
 
 namespace ArkFunds.Reports.Application.Commands;
 
@@ -18,17 +20,26 @@ public class GenerateReportCommandHandler
     }
 
     public static async Task<ReportGenerated> Handle(GenerateReportCommand command, IReportGenerator reportGenerator,
+        IMessageBus bus,
         IDocumentSession session, CancellationToken cancellationToken)
     {
         var previousMonthDate = new DateTime(command.Year, command.Month, 1)
             .AddMonths(-1);
 
-        var previousReport = await session.QueryAsync(new GetReportQuery(previousMonthDate), cancellationToken);
+        var previousReport = await session.QueryAsync(new GetReportQuery(previousMonthDate), cancellationToken) ?? new Report();
         var report = await reportGenerator.GenerateReportAsync(command.Year, command.Month, previousReport);
 
         session.Store(report);
         await session.SaveChangesAsync(cancellationToken);
 
-        return report.Adapt<ReportGenerated>();
+        Console.WriteLine("=== Event ===");
+        Console.WriteLine("Report generated");
+        Console.WriteLine("=============");
+
+
+        var newEvent = report.Adapt<ReportGenerated>();
+        await bus.InvokeAsync(newEvent, cancellationToken);
+
+        return newEvent;
     }
 }

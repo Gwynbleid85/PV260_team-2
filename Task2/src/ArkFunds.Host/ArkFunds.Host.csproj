@@ -37,6 +37,7 @@
         <PackageReference Include="WolverineFx.Marten" Version="2.0.0"/>
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\ArkFunds.Emails\ArkFunds.Emails.csproj" />
         <ProjectReference Include="..\ArkFunds.Reports\ArkFunds.Reports.csproj"/>
     </ItemGroup>
 </Project>

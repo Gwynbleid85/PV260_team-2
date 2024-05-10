@@ -1,6 +1,9 @@
-﻿using ArkFunds.Host;
+﻿using ArkFunds.Emails;
+using ArkFunds.Host;
 using ArkFunds.Reports;
-﻿using CommunityToolkit.Diagnostics;
+using CommunityToolkit.Diagnostics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +14,10 @@ builder.Services.AddMarten(builder.Configuration);
 var assemblies = builder.Configuration.GetSection("Assemblies").Get<string[]>();
 Guard.IsNotNull(assemblies, "Program assemblies");
 
-builder.Services.AddSwagger("PV260 API", assemblies);
+builder.Services.AddSwagger("PV260 API", assemblies[..1]);
 
 builder.Services.AddReports(builder.Configuration);
+builder.Services.AddEmails(builder.Configuration);
 
 builder.Host.UseProjects(assemblies);
 
@@ -42,6 +46,5 @@ if (app.Environment.IsDevelopment())
 app.UseHost();
 
 app.UseHttpsRedirection();
-
 
 app.Run();
