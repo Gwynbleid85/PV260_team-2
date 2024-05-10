@@ -17,6 +17,20 @@ builder.Services.AddReports(builder.Configuration);
 
 builder.Host.UseProjects(assemblies);
 
+builder.Services.AddOpenTelemetry().ConfigureResource(r => r.AddService("OtelWebApi"))
+    .WithTracing(t =>
+        t.AddSource("Wolverine")
+            .AddHttpClientInstrumentation()
+            .AddAspNetCoreInstrumentation()
+            .AddJaegerExporter(
+                options =>
+                {
+                    options.AgentHost = "localhost";
+                    options.AgentPort = 6831;
+                }
+            )
+    );
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
