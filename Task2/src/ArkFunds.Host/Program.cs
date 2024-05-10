@@ -9,6 +9,8 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using ArkFunds.Users;
 using CommunityToolkit.Diagnostics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
 
