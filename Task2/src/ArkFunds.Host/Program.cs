@@ -4,6 +4,8 @@ using ArkFunds.Reports;
 using CommunityToolkit.Diagnostics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using ArkFunds.Users;
+using CommunityToolkit.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,8 @@ builder.Services.AddSwagger("PV260 API", assemblies[..1]);
 
 builder.Services.AddReports(builder.Configuration);
 builder.Services.AddEmails(builder.Configuration);
+builder.Services.AddUsers(builder.Configuration);
+
 
 builder.Host.UseProjects(assemblies);
 

@@ -39,5 +39,6 @@
     <ItemGroup>
         <ProjectReference Include="..\ArkFunds.Emails\ArkFunds.Emails.csproj" />
         <ProjectReference Include="..\ArkFunds.Reports\ArkFunds.Reports.csproj"/>
+        <ProjectReference Include="..\ArkFunds.Users\ArkFunds.Users.csproj" />
     </ItemGroup>
 </Project>
