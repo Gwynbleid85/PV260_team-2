@@ -2,6 +2,7 @@ using ArkFunds.Users.Application.Commands;
 using ArkFunds.Users.Core;
 using ArkFunds.Users.Core.Events;
 using Marten;
+using Microsoft.AspNetCore.Mvc;
 using Wolverine;
 using Wolverine.Http;
 using Wolverine.Http.Marten;
@@ -33,9 +34,9 @@ public class UsersEndpoint
     }
     
     [WolverinePut("/users/{id}/email")]
-    public static async Task<UserEmailChanged> UserChangeEmail(IMessageBus bus)
+    public static async Task<UserEmailChanged> UserChangeEmail(Guid id, [FromBody] string userEmail, IMessageBus bus)
     {
-        var command = new ChangeUserEmailCommand();
+        var command = new ChangeUserEmailCommand(id, userEmail);
         return await bus.InvokeAsync<UserEmailChanged>(command);
     }
     
