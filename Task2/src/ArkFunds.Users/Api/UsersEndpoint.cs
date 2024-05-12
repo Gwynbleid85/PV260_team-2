@@ -9,6 +9,8 @@ using Wolverine.Http.Marten;
 
 namespace ArkFunds.Users.Api;
 
+public record ChangeUserEmailRequest(string UserEmail);
+
 public class UsersEndpoint
 {
     //TODO: Add authorization
@@ -57,13 +59,13 @@ public class UsersEndpoint
     /// Change user email
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="userEmail"></param>
+    /// <param name="request"></param>
     /// <param name="bus"></param>
     /// <returns>id, email</returns>
     [WolverinePut("/users/{id}/email")]
-    public static async Task<UserEmailChanged> UserChangeEmail(Guid id, [FromBody] string userEmail, IMessageBus bus)
+    public static async Task<UserEmailChanged> UserChangeEmail(Guid id, ChangeUserEmailRequest request, IMessageBus bus)
     {
-        var command = new ChangeUserEmailCommand(id, userEmail);
+        var command = new ChangeUserEmailCommand(id, request.UserEmail);
         return await bus.InvokeAsync<UserEmailChanged>(command);
     }
     
