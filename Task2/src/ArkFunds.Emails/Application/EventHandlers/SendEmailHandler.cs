@@ -28,7 +28,7 @@ public class SendEmailHandler
                       $"<body>" +
                       $"<h1>Hi {user.Name}!</h1>" +
                       $"<h3>New report just dropped!!!<h3>" +
-                      $"Check it out by clicking this button:" +
+                      $"Check it out by clicking on this button:" +
                       $"<a href=\"www.asdf.com\" style=\"color:blue;font-size:36px\">" +
                       $"<button>Check new report</button>" +
                       $"</a>" +
