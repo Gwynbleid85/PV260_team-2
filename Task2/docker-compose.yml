@@ -28,3 +28,10 @@ services:
       - "9411:9411"
     environment:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+
+  grafana:
+    image: grafana/grafana:latest
+    depends_on:
+      - jeagerTracing
+    ports:
+      - "3000:3000"

@@ -16,7 +16,7 @@ public class GenerateReportCommandHandler
     {
         var time = new DateTime(command.Year, command.Month, 1);
         var report = await session.QueryAsync(new GetCurrentReportQuery(time), cancellationToken);
-        Guard.IsFalse(report.Any(), "Report already exists for this month");
+        //Guard.IsFalse(report.Any(), "Report already exists for this month");
     }
 
     public static async Task<ReportGenerated> Handle(GenerateReportCommand command, IReportGenerator reportGenerator,
@@ -26,7 +26,8 @@ public class GenerateReportCommandHandler
         var previousMonthDate = new DateTime(command.Year, command.Month, 1)
             .AddMonths(-1);
 
-        var previousReport = await session.QueryAsync(new GetReportQuery(previousMonthDate), cancellationToken) ?? new Report();
+        var previousReport = await session.QueryAsync(new GetReportQuery(previousMonthDate), cancellationToken) ??
+                             new Report();
         var report = await reportGenerator.GenerateReportAsync(command.Year, command.Month, previousReport);
 
         session.Store(report);
