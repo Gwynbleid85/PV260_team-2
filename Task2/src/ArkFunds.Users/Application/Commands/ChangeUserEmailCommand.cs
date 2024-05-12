@@ -1,3 +1,3 @@
 namespace ArkFunds.Users.Application.Commands;
 
-public record ChangeUserEmailCommand();
+public record ChangeUserEmailCommand(Guid UserId, string UserEmail);
