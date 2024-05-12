@@ -1,3 +1,3 @@
 namespace ArkFunds.Users.Application.Commands;
 
-public record DeleteUserCommand();
+public record DeleteUserCommand(Guid UserId);

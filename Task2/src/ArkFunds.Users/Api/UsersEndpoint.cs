@@ -27,9 +27,9 @@ public class UsersEndpoint
     }
     
     [WolverineDelete("/users/{id}")]
-    public static async Task<UserDeleted> UserDelete(IMessageBus bus)
+    public static async Task<UserDeleted> UserDelete(Guid id, IMessageBus bus)
     {
-        var command = new DeleteUserCommand();
+        var command = new DeleteUserCommand(id);
         return await bus.InvokeAsync<UserDeleted>(command);
     }
     

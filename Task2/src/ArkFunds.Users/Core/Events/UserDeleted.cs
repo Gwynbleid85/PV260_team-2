@@ -1,3 +1,3 @@
 namespace ArkFunds.Users.Core.Events;
 
-public record UserDeleted();
+public record UserDeleted(Guid UserId);
