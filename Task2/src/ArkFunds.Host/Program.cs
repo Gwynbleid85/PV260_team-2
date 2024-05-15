@@ -1,6 +1,7 @@
 ﻿using ArkFunds.Host;
 using ArkFunds.Reports;
-﻿using CommunityToolkit.Diagnostics;
+using ArkFunds.Users;
+using CommunityToolkit.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ Guard.IsNotNull(assemblies, "Program assemblies");
 builder.Services.AddSwagger("PV260 API", assemblies);
 
 builder.Services.AddReports(builder.Configuration);
+builder.Services.AddUsers(builder.Configuration);
+
 
 builder.Host.UseProjects(assemblies);
 
