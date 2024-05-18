@@ -29,23 +29,25 @@ public static class DependencyInjection
             opts.Connection(connectionString);
             opts.DatabaseSchemaName = dbSchemeName;
         });
-        
-        services.AddHttpClient(ArkHttpClientName, client =>
-        {
-            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-        });
+
+        services.AddHttpClient(ArkHttpClientName,
+            client =>
+            {
+                client.DefaultRequestHeaders.Add("User-Agent",
+                    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+            });
 
         // Add custom services
         services
             .AddSingleton<ITimeProvider, TimeProvider>()
             .AddSingleton<IReportGenerator, ReportGenerator>();
-        
+
         var sourceType = configuration.GetSection("ReportsSettings").GetValue<ReportSourceType?>("SourceType");
         Guard.IsNotNull(sourceType, "Report source type");
 
         services
             .AddSingleton<IReportParser, CsvReportParser>();
-        
+
         switch (sourceType)
         {
             case ReportSourceType.Http:

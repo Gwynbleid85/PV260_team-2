@@ -14,8 +14,9 @@ public class DeleteUserCommandHandler
         Guard.IsNotNull(user);
         return user;
     }
-    
-    public static async Task<UserDeleted> Handle(DeleteUserCommand command, User user, IDocumentSession session, CancellationToken cancellationToken)
+
+    public static async Task<UserDeleted> Handle(DeleteUserCommand command, User user, IDocumentSession session,
+        CancellationToken cancellationToken)
     {
         session.Delete(user);
         await session.SaveChangesAsync(cancellationToken);

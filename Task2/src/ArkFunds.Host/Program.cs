@@ -1,5 +1,12 @@
-﻿using ArkFunds.Host;
+﻿using ArkFunds.Emails;
+using ArkFunds.Host;
 using ArkFunds.Reports;
+using ArkFunds.Users;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using CommunityToolkit.Diagnostics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using ArkFunds.Users;
 using CommunityToolkit.Diagnostics;
 
@@ -12,13 +19,27 @@ builder.Services.AddMarten(builder.Configuration);
 var assemblies = builder.Configuration.GetSection("Assemblies").Get<string[]>();
 Guard.IsNotNull(assemblies, "Program assemblies");
 
-builder.Services.AddSwagger("PV260 API", assemblies);
+builder.Services.AddSwagger("PV260 API", assemblies[..1]);
 
 builder.Services.AddReports(builder.Configuration);
+builder.Services.AddEmails(builder.Configuration);
 builder.Services.AddUsers(builder.Configuration);
 
-
 builder.Host.UseProjects(assemblies);
+
+builder.Services.AddOpenTelemetry().ConfigureResource(r => r.AddService("OtelWebApi"))
+    .WithTracing(t =>
+        t.AddSource("Wolverine")
+            .AddHttpClientInstrumentation()
+            .AddAspNetCoreInstrumentation()
+            .AddJaegerExporter(
+                options =>
+                {
+                    options.AgentHost = "localhost";
+                    options.AgentPort = 6831;
+                }
+            )
+    );
 
 var app = builder.Build();
 
@@ -31,6 +52,5 @@ if (app.Environment.IsDevelopment())
 app.UseHost();
 
 app.UseHttpsRedirection();
-
 
 app.Run();
