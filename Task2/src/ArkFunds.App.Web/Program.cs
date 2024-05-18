@@ -12,7 +12,9 @@ builder.Services
 builder.Services
     .AddHttpClient()
     .AddTransient<IReportsClient, ReportsClient>(sp =>
-        new ReportsClient(builder.Configuration.GetConnectionString("ApiBaseUrl"), sp.GetService<HttpClient>()));
+        new ReportsClient(builder.Configuration.GetConnectionString("ApiBaseUrl"), sp.GetService<HttpClient>()))
+    .AddTransient<IUsersClient, UsersClient>(sp =>
+        new UsersClient(builder.Configuration.GetConnectionString("ApiBaseUrl"), sp.GetService<HttpClient>()));
 
 var app = builder.Build();
 
