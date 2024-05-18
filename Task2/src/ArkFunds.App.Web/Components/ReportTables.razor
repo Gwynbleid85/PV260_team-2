@@ -1,68 +1,30 @@
 <div class="report-table">
     <h4>New positions</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Company name</th>
-            <th>Ticker</th>
-            <th>Shares</th>
-            <th>Weight (%)</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var holding in Report.NewPositions)
-        {
-            <tr>
-                <td>@holding.Company</td>
-                <td>@holding.Ticker</td>
-                <td>@holding.Shares.ToString("N0")</td>
-                <td>@holding.Weight</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <RadzenDataGrid Data="@Report.NewPositions">
+        <Columns>
+            <RadzenDataGridColumn Property="Company" Title="Company name" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Ticker" Title="Ticker" Frozen="true" Width="30px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Shares" Title="Shares" Frozen="true" Width="40px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Weight" Title="Weight" Frozen="true" Width="30px" TextAlign="TextAlign.Center" />
+        </Columns>
+    </RadzenDataGrid>
+   
     <h4>Increased positions</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Company name</th>
-            <th>Ticker</th>
-            <th>Shares <i class="fa-solid fa-caret-up"></i> (x%)</th>
-            <th>Weight (%)</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var holding in Report.IncreaedPositions)
-        {
-            <tr>
-                <td>@holding.Company</td>
-                <td>@holding.Ticker</td>
-                <td>@holding.Shares.ToString("N0") (@holding.SharesPercentageChange)</td>
-                <td>@holding.Weight</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <RadzenDataGrid Data="@Report.IncreaedPositions">
+        <Columns>
+            <RadzenDataGridColumn Property="Company" Title="Company name" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Ticker" Title="Ticker" Frozen="true" Width="30px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Shares" Title="Shares" Frozen="true" Width="40px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Weight" Title="Weight" Frozen="true" Width="30px" TextAlign="TextAlign.Center" />
+        </Columns>
+    </RadzenDataGrid>
     <h4>Reduces positions</h4>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Company name</th>
-            <th>Ticker</th>
-            <th>Shares <i class="fa-solid fa-caret-down"></i> (x%)</th>
-            <th>Weight (%)</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var holding in Report.ReducedPositions)
-        {
-            <tr>
-                <td>@holding.Company</td>
-                <td>@holding.Ticker</td>
-                <td>@holding.Shares.ToString("N0") (@holding.SharesPercentageChange)</td>
-                <td>@holding.Weight</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+    <RadzenDataGrid Data="@Report.ReducedPositions">
+        <Columns>
+            <RadzenDataGridColumn Property="Company" Title="Company name" Frozen="true" Width="80px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Ticker" Title="Ticker" Frozen="true" Width="30px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Shares" Title="Shares" Frozen="true" Width="40px" TextAlign="TextAlign.Center" />
+            <RadzenDataGridColumn Property="Weight" Title="Weight" Frozen="true" Width="30px" TextAlign="TextAlign.Center" />
+        </Columns>
+    </RadzenDataGrid>
 </div>
