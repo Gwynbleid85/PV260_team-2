@@ -7,10 +7,7 @@ public partial class Reports
     private Report report;
 
     private bool isLoading = true;
-    private bool isGeneratingReport;
     private bool currentReportExists;
-
-    private string? error;
     
     protected override async Task OnInitializedAsync()
     {
@@ -28,30 +25,10 @@ public partial class Reports
         }
     }
 
-    private async Task GenerateReport()
-    {
-        try
-        {
-            isGeneratingReport = true;
-            await reportsClient.ReportsAsync();
-            await GetCurrentMonthReport();
-        }
-        catch (Exception ex)
-        {
-            error = "Report for this month already exists.";
-        }
-        finally
-        {
-            isLoading = false;
-            isGeneratingReport = false;
-        }
-    }
-
     private async Task GetCurrentMonthReport()
     {
         isLoading = true;
         report = await reportsClient.CurrentAsync();
         currentReportExists = true;
-        error = null;
     }
 }

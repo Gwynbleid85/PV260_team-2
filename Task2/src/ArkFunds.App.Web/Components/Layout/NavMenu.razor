@@ -1,24 +1,16 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Ark Funds</a>
-    </div>
-</div>
+﻿@rendermode InteractiveServer
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+<RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" Style="position: absolute; z-index: 10" />
+<RadzenSidebar Responsive="false" @bind-Expanded="@sidebarExpanded">
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem Path="reports" Text="Overview" Icon="home" Style="padding-top: 50px"/>
+        <RadzenPanelMenuItem Path="history" Text="History" Icon="dashboard" />
+        <RadzenPanelMenuItem Path="user" Text="User" Icon="person" />
+    </RadzenPanelMenu>
+</RadzenSidebar>
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> View reports
-            </NavLink>
-        </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="history">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> History
-            </NavLink>
-        </div>
-    </nav>
-</div>
+@code {
+    private bool sidebarExpanded = false;
+}
 

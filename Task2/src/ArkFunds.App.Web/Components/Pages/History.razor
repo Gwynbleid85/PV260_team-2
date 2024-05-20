@@ -1,6 +1,7 @@
 ﻿@page "/history"
 @rendermode InteractiveServer
 
+@using System.Globalization
 @using ArkFunds.App.Web.Api
 @inject IReportsClient reportsClient;
 
@@ -13,17 +14,17 @@
 }
 else
 {
-    <div style="display: flex; flex-direction: column; gap: 16px;">
+    <div class="d-flex flex-column gap-3">
         @if (history.Count == 0)
         {
             <span>No history.</span>
         }
         @foreach (var report in history)
         {
-            <div class="history-item" @onclick="() => ToggleTable(report.Id)">
-                <b>@report.Month.ToString("00") - @report.Year</b>
+            <div class="history-item shadow-sm" @onclick="() => ToggleTable(report.Id)">
+                <b class="text-secondary"> @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(report.Month) @report.Year</b>
             </div>
-            <div class="@(isActive[report.Id] ? "active" : "inactive")">
+            <div class="@(isActive[report.Id] ? "collapse.show" : "collapse")">
                 <ReportTables Report="report" />
             </div>
         }
