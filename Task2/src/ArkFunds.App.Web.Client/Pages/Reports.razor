@@ -6,7 +6,6 @@
 @inject IReportsClient reportsClient;
 
 <PageTitle>Reports</PageTitle>
-
 @if (isLoading)
 {
     <h3>Report for ... </h3>
@@ -14,7 +13,7 @@
 }
 else if (!currentReportExists)
 {
-    <span>No reports available.</span>
+    <span>Couldn't fetch data...</span>
 } else
 {
     <h3>Report for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(report.Month) @report.Year</h3>

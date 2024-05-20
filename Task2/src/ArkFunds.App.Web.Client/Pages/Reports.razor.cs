@@ -17,7 +17,13 @@ public partial class Reports
         }
         catch (Exception ex)
         {
-            currentReportExists = false;
+            try
+            {
+                await GetThreeMonthsOldReport();
+            } catch (Exception ex2)
+            {
+                currentReportExists = false;
+            }
         }
         finally
         {
@@ -29,6 +35,12 @@ public partial class Reports
     {
         isLoading = true;
         report = await reportsClient.CurrentAsync();
+        currentReportExists = true;
+    }
+    private async Task GetThreeMonthsOldReport()
+    {
+        isLoading = true;
+        report = await reportsClient.ThreeMonthsOldAsync();
         currentReportExists = true;
     }
 }

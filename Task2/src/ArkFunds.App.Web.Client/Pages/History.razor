@@ -1,17 +1,21 @@
 ﻿@page "/history"
 
+
 @using System.Globalization
 @using ArkFunds.App.Web.Client.Api
 @inject IReportsClient reportsClient;
 
 <PageTitle>History</PageTitle>
 
-<h1>Report History</h1>
-
+<h1 class="fs-3">Report History</h1>
 @if (isLoading) {
     <span>Loading...</span>
 }
-else
+else if (cannotLoad)
+{
+    <span>Couldn't fetch data...</span>
+}
+else 
 {
     <div class="d-flex flex-column gap-3">
         @if (history.Count == 0)
