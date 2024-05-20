@@ -1,5 +1,3 @@
-using ArkFunds.Reports.Infrastructure;
-
 namespace ArkFunds.Reports.Core;
 
 public class Report
