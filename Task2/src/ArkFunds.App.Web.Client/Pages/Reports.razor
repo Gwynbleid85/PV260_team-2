@@ -1,0 +1,22 @@
+﻿@page "/reports"
+@page "/"
+
+@using System.Globalization
+@using ArkFunds.App.Web.Client.Api
+@inject IReportsClient reportsClient;
+
+<PageTitle>Reports</PageTitle>
+
+@if (isLoading)
+{
+    <h3>Report for ... </h3>
+    <span>Loading...</span>
+}
+else if (!currentReportExists)
+{
+    <span>No reports available.</span>
+} else
+{
+    <h3>Report for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(report.Month) @report.Year</h3>
+    <ReportTables Report="report" />
+}
