@@ -40,31 +40,24 @@ builder.Services.AddOpenTelemetry().ConfigureResource(r => r.AddService("OtelWeb
             )
     );
 
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options => {
-        options.Authority = "https://localhost:5001";
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateAudience = false, // TODO: Validate 
-        };
-    });
+//builder.Services.AddAuthentication("Bearer")
+//    .AddJwtBearer("Bearer", options => {
+//        options.Authority = "https://localhost:5001";
+//        options.TokenValidationParameters = new TokenValidationParameters()
+//        {
+//            ValidateAudience = false, // TODO: Validate 
+//        };
+//    });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("ApiScope", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "ArkFundsAPI");
-    });
-});
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("ApiScope", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireClaim("scope", "ArkFundsAPI");
+//    });
+//});
 
-builder.Services.AddCors(policy =>
-{
-    policy.AddPolicy("_myAllowSpecificOrigins", builder => builder
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
-});
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
@@ -74,14 +67,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(opts =>
     {
-        opts.OAuthUsePkce();
+        //opts.OAuthUsePkce();
     });
 }
 
 app.MapWolverineEndpoints(opts =>
 {
     opts.UseFluentValidationProblemDetailMiddleware();
-    opts.ConfigureEndpoints(e => e.RequireAuthorization("ApiScope"));
+    //opts.ConfigureEndpoints(e => e.RequireAuthorization("ApiScope"));
 });
 
 // app.UseReports();
@@ -91,6 +84,5 @@ app.UseReports();
 
 app.UseHttpsRedirection();
 
-app.UseCors("_myAllowSpecificOrigins");
 
 app.Run();
