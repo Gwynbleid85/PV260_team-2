@@ -50,6 +50,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHost();
+app.UseReports();
 
 app.UseHttpsRedirection();
 

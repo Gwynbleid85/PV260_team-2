@@ -11,9 +11,6 @@ public class SendEmailHandler
 {
     public static async Task<EmailsSend> Handle(ReportGenerated reportGeneratedEvent, IMailer mailer, IMessageBus bus)
     {
-        Console.WriteLine("=== Event ===");
-        Console.WriteLine("Sending email...");
-        Console.WriteLine("=============");
         // Get subscribed users
         var query = new GetSubscribedUsersQuery();
         var subscribedUsers = await bus.InvokeAsync<GetSubscribedUsersQuery.Response>(query);

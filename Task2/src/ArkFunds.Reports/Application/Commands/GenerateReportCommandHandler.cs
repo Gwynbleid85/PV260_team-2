@@ -33,10 +33,6 @@ public class GenerateReportCommandHandler
         session.Store(report);
         await session.SaveChangesAsync(cancellationToken);
 
-        Console.WriteLine("=== Event ===");
-        Console.WriteLine("Report generated");
-        Console.WriteLine("=============");
-
 
         var newEvent = report.Adapt<ReportGenerated>();
         await bus.InvokeAsync(newEvent, cancellationToken);

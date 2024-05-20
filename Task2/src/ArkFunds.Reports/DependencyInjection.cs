@@ -2,6 +2,7 @@ using ArkFunds.Reports.Application.ServiceInterfaces;
 using ArkFunds.Reports.Core.Enums;
 using ArkFunds.Reports.Infrastructure;
 using CommunityToolkit.Diagnostics;
+using Coravel;
 using Marten;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -59,13 +60,22 @@ public static class DependencyInjection
             default:
                 throw new ArgumentOutOfRangeException();
         }
+        
+        // Add coravel scheduler
+        services.AddScheduler();
 
         return services;
     }
 
     public static IApplicationBuilder UseReports(this WebApplication app)
     {
-        app.MapWolverineEndpoints(opts => { opts.UseFluentValidationProblemDetailMiddleware(); });
+        var provider = app.Services;
+        provider.UseScheduler(scheduler =>
+        {
+            // Schedule report generation every month
+            scheduler.Schedule<ScheduledReportGenerationInvocable>()
+                .Monthly();
+        });
 
         return app;
     }
