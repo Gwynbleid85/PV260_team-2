@@ -13,7 +13,8 @@ public partial class History
     protected override async Task OnInitializedAsync()
     {
         history = await reportsClient.HistoryAsync();
-        foreach(var item in history)
+        history = history.OrderByDescending(i => new DateTime(i.Year, i.Month, 1)).ToList();
+        foreach (var item in history)
         {
             isActive[item.Id] = false;
         }

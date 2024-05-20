@@ -1,19 +1,11 @@
 ﻿@rendermode InteractiveServer
 
-<RadzenHeader>
-    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
-        <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-        <RadzenLabel Text="Header" />
-    </RadzenStack>
-</RadzenHeader>
-<RadzenSidebar Responsive="false" Style="width: max-content">
-    <RadzenPanelMenu DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
-        <RadzenPanelMenuItem Text="Overview" Icon="home" />
-        <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" />
-        <RadzenPanelMenuItem Text="UI Fundamentals" Icon="auto_awesome">
-            <RadzenPanelMenuItem Text="Themes" Icon="color_lens" />
-            <RadzenPanelMenuItem Text="Colors" Icon="invert_colors" />
-        </RadzenPanelMenuItem>
+<RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" Style="position: absolute; z-index: 10" />
+<RadzenSidebar Responsive="false" @bind-Expanded="@sidebarExpanded">
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem Path="reports" Text="Overview" Icon="home" Style="padding-top: 50px"/>
+        <RadzenPanelMenuItem Path="history" Text="History" Icon="dashboard" />
+        <RadzenPanelMenuItem Path="user" Text="User" Icon="person" />
     </RadzenPanelMenu>
 </RadzenSidebar>
 
