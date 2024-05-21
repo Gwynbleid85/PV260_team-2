@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        <div class="nav-link font-weight-bold text-white">
+            Hi @context.User.Identity?.Name!
+        </div>
+
+        <button class="nav-link btn btn-link  text-white" @onclick="BeginLogOut">Log out</button>
+    </Authorized>
+    <NotAuthorized>
+        <a href="authentication/login" class="nav-link font-weight- text-white">Log in</a>
+        <button class="nav-link btn btn-link  text-white" @onclick="BeginRegister">Register</button>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    private void BeginLogOut()
+    {
+        Navigation.NavigateToLogout("authentication/logout");
+    }
+
+    private void BeginRegister()
+    {
+        Navigation.NavigateTo("https://localhost:5001/Account/Create?ReturnUrl=https://localhost:7164");
+    }
+}   
