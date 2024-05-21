@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.App.Web", "src\Ark
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.Users", "src\ArkFunds.Users\ArkFunds.Users.csproj", "{BB850608-90FF-4BB5-A726-2FF31F7F6C81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.Tests", "ArkFunds.Tests\ArkFunds.Tests.csproj", "{B79138D6-D7A6-44E8-9832-6EB8BA58882E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,7 +42,11 @@ Global
 		{BB850608-90FF-4BB5-A726-2FF31F7F6C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB850608-90FF-4BB5-A726-2FF31F7F6C81}.Release|Any CPU.Build.0 = Release|Any CPU
 
-EndGlobalSection
+		{B79138D6-D7A6-44E8-9832-6EB8BA58882E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79138D6-D7A6-44E8-9832-6EB8BA58882E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79138D6-D7A6-44E8-9832-6EB8BA58882E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79138D6-D7A6-44E8-9832-6EB8BA58882E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
