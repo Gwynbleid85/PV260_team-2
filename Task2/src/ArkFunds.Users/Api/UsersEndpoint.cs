@@ -85,4 +85,17 @@ public class UsersEndpoint
         var command = new SubscribeUserCommand(id);
         return await bus.InvokeAsync<UserSubscribed>(command);
     }
+    //TODO: Add authorization
+    /// <summary>
+    /// Unsubscribe user
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="bus"></param>
+    /// <returns>id</returns>
+    [WolverinePost("/users/{id}/unsubscription")]
+    public static async Task<UserUnsubscribed> UserUnsubscribe(Guid id, IMessageBus bus)
+    {
+        var command = new UnsubscribeUserCommand(id);
+        return await bus.InvokeAsync<UserUnsubscribed>(command);
+    }
 }
