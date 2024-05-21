@@ -1,0 +1,36 @@
+﻿@page "/reports"
+@page "/"
+
+@using System.Globalization
+@using ArkFunds.App.Web.Api
+@inject IReportsClient reportsClient;
+@inject AuthenticationStateProvider authProvider;
+
+<PageTitle>Reports</PageTitle>
+
+@if (isLoading)
+{
+    <h3>Report for ... </h3>
+    <span>Loading...</span>
+}
+else if (!currentReportExists)
+{
+    <div class="d-flex flex-row w-100 justify-content-center">
+        <div class="report-missing d-flex flex-column justify-content-center p-4 text-center shadow-md">
+            <h3>No report found</h3>
+            <span class="text-secondary">Log in to get the latest report!</span>
+        </div>
+    </div>
+} else
+{
+    <AuthorizeView>
+        <Authorized>
+            <h3>Report for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(report.Month) @report.Year</h3>
+            <ReportTables Report="report" />
+        </Authorized>
+        <NotAuthorized>
+            <h3>Report for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(oldReport.Month) @oldReport.Year</h3>
+            <ReportTables Report="oldReport" />
+        </NotAuthorized>
+    </AuthorizeView>
+}

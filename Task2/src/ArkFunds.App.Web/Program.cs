@@ -1,35 +1,34 @@
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using ArkFunds.App.Web;
 using ArkFunds.App.Web.Api;
-using ArkFunds.App.Web.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Add services to the container.
-builder.Services
-    .AddRazorComponents()
-    .AddInteractiveServerComponents();
+var apiBaseUrl = builder.Configuration.GetValue<string>("ApiBaseUrl");
 
-// Add api clients
-builder.Services
-    .AddHttpClient()
-    .AddTransient<IReportsClient, ReportsClient>(sp =>
-        new ReportsClient(builder.Configuration.GetConnectionString("ApiBaseUrl"), sp.GetService<HttpClient>()));
+builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(apiBaseUrl))
+    .AddHttpMessageHandler(serviceProvider
+        => serviceProvider?.GetService<AuthorizationMessageHandler>()
+            ?.ConfigureHandler(
+                authorizedUrls: new[] { apiBaseUrl },
+                scopes: new[] { "ArkFundsAPI" }));
 
-var app = builder.Build();
+builder.Services.AddScoped<HttpClient>(serviceProvider => serviceProvider.GetService<IHttpClientFactory>().CreateClient("api"));
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+builder.Services.AddScoped<IReportsClient, ReportsClient>(provider => new ReportsClient(apiBaseUrl, provider.GetService<HttpClient>()));
+builder.Services.AddScoped<IUsersClient, UsersClient>(provider => new UsersClient(apiBaseUrl, provider.GetService<HttpClient>()));
+
+builder.Services.AddOidcAuthentication(options =>
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    builder.Configuration.Bind("IdentityServer", options.ProviderOptions);
+    var configurationSection = builder.Configuration.GetSection("IdentityServer");
+    var authority = configurationSection["Authority"];
 
-app.UseHttpsRedirection();
+    options.ProviderOptions.DefaultScopes.Add("ArkFundsAPI");
+});
 
-app.UseStaticFiles();
-app.UseAntiforgery();
-
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
-
-app.Run();
+await builder.Build().RunAsync();

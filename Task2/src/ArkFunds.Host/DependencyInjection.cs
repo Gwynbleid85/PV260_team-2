@@ -12,13 +12,6 @@ namespace ArkFunds.Host;
 
 public static class DependencyInjection
 {
-    public static IApplicationBuilder UseHost(this WebApplication app)
-    {
-        app.MapWolverineEndpoints(opts => { opts.UseFluentValidationProblemDetailMiddleware(); });
-
-        return app;
-    }
-
     public static IServiceCollection AddMarten(this IServiceCollection services, IConfiguration configuration)
     {
         var dbSchemeName = configuration.GetSection("DbSettings")["DbSchemeName"];
@@ -62,6 +55,34 @@ public static class DependencyInjection
                 var assemblyXmlPath = Path.Combine(AppContext.BaseDirectory, $"{assembly}.xml");
                 opt.IncludeXmlComments(assemblyXmlPath);
             }
+            
+            opt.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    AuthorizationCode = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
+                        TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                        Scopes = new Dictionary<string, string>
+                        {
+                            {"ArkFundsAPI", "API - full access"}
+                        }
+                    },
+                }
+            });
+            
+            opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
+                    },
+                    new[] { "ArkFundsAPI" }
+                }
+            });
         });
         return services;
     }

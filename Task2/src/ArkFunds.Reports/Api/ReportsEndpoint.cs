@@ -3,6 +3,7 @@ using ArkFunds.Reports.Application.Queries;
 using ArkFunds.Reports.Application.ServiceInterfaces;
 using ArkFunds.Reports.Core;
 using ArkFunds.Reports.Core.Events;
+using Microsoft.AspNetCore.Authorization;
 using Wolverine;
 using Wolverine.Http;
 
@@ -10,7 +11,6 @@ namespace ArkFunds.Reports.Api;
 
 public class ReportsEndpoint
 {
-    //TODO: Add authorization
     /// <summary>
     /// Get current report
     /// </summary>
@@ -33,6 +33,7 @@ public class ReportsEndpoint
     /// <param name="bus"></param>
     /// <param name="timeProvider"></param>
     /// <returns>Three month old report </returns>
+    [AllowAnonymous]
     [WolverineGet("/reports/three-months-old")]
     public static async Task<Report?> GetThreeMonthsOldReport(IMessageBus bus,
         ITimeProvider timeProvider)
@@ -40,10 +41,9 @@ public class ReportsEndpoint
         var query = new GetThreeMonthOldReportQuery(timeProvider.GetCurrentTime());
 
         var queryResponse = await bus.InvokeAsync<GetThreeMonthOldReportQuery.Response>(query);
-        return queryResponse.Report;
+        return queryResponse?.Report;
     }
 
-    //TODO: Add authorization
     /// <summary>
     /// Get report history
     /// </summary>

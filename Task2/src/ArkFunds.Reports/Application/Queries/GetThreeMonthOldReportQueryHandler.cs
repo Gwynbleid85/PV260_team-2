@@ -4,10 +4,11 @@ namespace ArkFunds.Reports.Application.Queries;
 
 public class GetThreeMonthOldReportQueryHandler
 {
-    public static async Task<GetCurrentReportQuery.Response> Handle(GetCurrentReportQuery query, IQuerySession session)
+    public static async Task<GetThreeMonthOldReportQuery.Response> Handle(GetThreeMonthOldReportQuery query,
+        IQuerySession session)
     {
-        var report = await session.QueryAsync(new CompiledQueries.GetCurrentReportQuery(query.CurrentTime));
+        var report = await session.QueryAsync(new CompiledQueries.GetThreeMonthOldReportQuery(query.CurrentTime));
 
-        return new GetCurrentReportQuery.Response(report.FirstOrDefault());
+        return new GetThreeMonthOldReportQuery.Response(report.FirstOrDefault());
     }
 }

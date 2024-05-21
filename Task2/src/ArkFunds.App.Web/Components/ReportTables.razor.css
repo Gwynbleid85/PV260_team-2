@@ -1,9 +1,0 @@
-﻿.report-table {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-th, td {
-    width: 25%;
-}
