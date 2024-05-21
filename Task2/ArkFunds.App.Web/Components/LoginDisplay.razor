@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+﻿@using ArkFunds.App.Web.Api
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager Navigation
 
 <AuthorizeView>
@@ -23,6 +24,6 @@
 
     private void BeginRegister()
     {
-        Navigation.NavigateTo("https://localhost:5001/Account/Create?ReturnUrl=https://localhost:7164");
+        Navigation.NavigateTo("https://localhost:5001/Account/Create?ReturnUrl=https://localhost:7164/authentication/register");
     }
 }   

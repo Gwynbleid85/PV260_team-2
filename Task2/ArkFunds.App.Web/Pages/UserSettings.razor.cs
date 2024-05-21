@@ -5,32 +5,27 @@ namespace ArkFunds.App.Web.Pages;
 public partial class UserSettings
 {
     private User user;
+    private string userName;
 
     private bool isLoading = true;
-    private bool userExists;
 
     protected override async Task OnInitializedAsync()
     {
+        var state = await authProvider.GetAuthenticationStateAsync();
         try
         {
-            await GetUserInfoAsync();
-        }
-        catch (Exception ex)
-        {
-            userExists = false;
+            if (state.User.Identity?.IsAuthenticated ?? false)
+            {
+                userName = state.User.Claims.First(x => x.Type == "name").Value;
+                
+                var id = new Guid(state.User.Claims.First(x => x.Type == "sub").Value);
+                user = await usersClient.UsersGetAsync(id);
+            }
         }
         finally
         {
             isLoading = false;
         }
-    }
-
-    private async Task GetUserInfoAsync()
-    {
-        isLoading = true;
-        user = await usersClient.UsersGetAsync(new Guid("1805258c-3d1b-4553-8540-279c6e3e7570"));
-        await Task.CompletedTask;
-        userExists = true;
     }
 
     public async Task ToggleSubscriptionSettingAsync()
