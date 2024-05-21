@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArkFunds.Emails", "src\ArkF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.Users", "src\ArkFunds.Users\ArkFunds.Users.csproj", "{BB850608-90FF-4BB5-A726-2FF31F7F6C81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.Identity", "ArkFunds.Identity\ArkFunds.Identity.csproj", "{61ED3491-F7BB-4F29-B3C4-26CF09A0E227}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.Identity", "src\ArkFunds.Identity\ArkFunds.Identity.csproj", "{61ED3491-F7BB-4F29-B3C4-26CF09A0E227}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.App.Web", "ArkFunds.App.Web\ArkFunds.App.Web.csproj", "{10FF9BAA-39D5-4293-8B94-28CA8D1AE7EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.App.Web", "src\ArkFunds.App.Web\ArkFunds.App.Web.csproj", "{10FF9BAA-39D5-4293-8B94-28CA8D1AE7EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
