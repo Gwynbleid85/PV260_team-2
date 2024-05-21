@@ -3,6 +3,7 @@ using ArkFunds.Reports.Application.Queries;
 using ArkFunds.Reports.Application.ServiceInterfaces;
 using ArkFunds.Reports.Core;
 using ArkFunds.Reports.Core.Events;
+using Microsoft.AspNetCore.Authorization;
 using Wolverine;
 using Wolverine.Http;
 
@@ -33,6 +34,7 @@ public class ReportsEndpoint
     /// <param name="bus"></param>
     /// <param name="timeProvider"></param>
     /// <returns>Three month old report </returns>
+    [AllowAnonymous]
     [WolverineGet("/reports/three-months-old")]
     public static async Task<Report?> GetThreeMonthsOldReport(IMessageBus bus,
         ITimeProvider timeProvider)
@@ -50,6 +52,7 @@ public class ReportsEndpoint
     /// <param name="bus"></param>
     /// <remarks>User has to be logged in for this endpoint</remarks>
     /// <returns>Report history</returns>
+    [AllowAnonymous]
     [WolverineGet("/reports/history")]
     public static async Task<IEnumerable<Report>> GetReportHistory(IMessageBus bus)
     {

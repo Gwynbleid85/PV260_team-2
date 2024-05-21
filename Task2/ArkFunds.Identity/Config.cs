@@ -45,8 +45,7 @@ public static class Config
                 AllowedGrantTypes =  new[] { GrantType.AuthorizationCode, GrantType.ResourceOwnerPassword },
                 
                 AllowOfflineAccess = true,
-
-                RedirectUris = { "https://localhost:7164", "https://localhost:7164/signin-oidc" },
+                RedirectUris = { "https://localhost:7164", "https://localhost:7164/signin-oidc", "https://localhost:7164/authentication/login-callback" },
                 PostLogoutRedirectUris = { "https://localhost:7164", "https://localhost:7164/signout-oidc", "https://localhost:7164/signout-callback-oidc" },
                 AllowedCorsOrigins= { "https://localhost:7164" },
                 AlwaysSendClientClaims = true,
@@ -57,7 +56,8 @@ public static class Config
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "ArkFundsAPI"
-                }
+                },
+                RequireClientSecret = false
             }
         };
 }

@@ -1,0 +1,31 @@
+﻿@page "/reports"
+@page "/"
+
+@using System.Globalization
+@using ArkFunds.App.Web.Api
+@inject IReportsClient reportsClient;
+@inject AuthenticationStateProvider authProvider;
+
+<PageTitle>Reports</PageTitle>
+
+@if (isLoading)
+{
+    <h3>Report for ... </h3>
+    <span>Loading...</span>
+}
+else if (!currentReportExists)
+{
+    <span>Couldn't fetch data...(we probably don't have data for this one)</span>
+} else
+{
+    <AuthorizeView>
+        <Authorized>
+            <h3>Report for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(report.Month) @report.Year</h3>
+            <ReportTables Report="report" />
+        </Authorized>
+        <NotAuthorized>
+            <h3>Report for @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(oldReport.Month) @oldReport.Year</h3>
+            <ReportTables Report="oldReport" />
+        </NotAuthorized>
+    </AuthorizeView>
+}

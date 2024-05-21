@@ -1,0 +1,16 @@
+<RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" Style="position: absolute; z-index: 10" />
+<RadzenSidebar Responsive="false" @bind-Expanded="@sidebarExpanded">
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem Path="reports" Text="Overview" Icon="home" Style="padding-top: 50px"/>
+        <RadzenPanelMenuItem Path="history" Text="History" Icon="dashboard" />
+        <RadzenPanelMenuItem Path="user" Text="User" Icon="person" />
+        <LoginDisplay />
+    </RadzenPanelMenu>
+</RadzenSidebar>
+
+@code {
+private bool sidebarExpanded = false;
+}
+
+
+
