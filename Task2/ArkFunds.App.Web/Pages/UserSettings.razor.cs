@@ -8,8 +8,6 @@ public partial class UserSettings
 
     private bool isLoading = true;
     private bool userExists;
-    private bool isChanging = false;
-    private string? error;
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,7 +31,6 @@ public partial class UserSettings
         user = await usersClient.UsersGetAsync(new Guid("1805258c-3d1b-4553-8540-279c6e3e7570"));
         await Task.CompletedTask;
         userExists = true;
-        error = null;
     }
 
     public async Task ToggleSubscriptionSettingAsync()

@@ -1,15 +1,21 @@
-<RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" Style="position: absolute; z-index: 10" />
+<div class="rz-sidebar-toggle-redone">
+<RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+</div>
 <RadzenSidebar Responsive="false" @bind-Expanded="@sidebarExpanded">
     <RadzenPanelMenu>
-        <RadzenPanelMenuItem Path="reports" Text="Overview" Icon="home" Style="padding-top: 50px"/>
-        <RadzenPanelMenuItem Path="history" Text="History" Icon="dashboard" />
-        <RadzenPanelMenuItem Path="user" Text="User" Icon="person" />
+        <RadzenPanelMenuItem Path="reports" Text="Overview" Icon="home" Style="padding-top: 70px"/>
+        <AuthorizeView>
+            <Authorized>
+                <RadzenPanelMenuItem Path="history" Text="History" Icon="dashboard" />
+                <RadzenPanelMenuItem Path="user" Text="User" Icon="person" />
+            </Authorized>
+        </AuthorizeView>
         <LoginDisplay />
     </RadzenPanelMenu>
 </RadzenSidebar>
 
 @code {
-private bool sidebarExpanded = false;
+    private bool sidebarExpanded = true;
 }
 
 
