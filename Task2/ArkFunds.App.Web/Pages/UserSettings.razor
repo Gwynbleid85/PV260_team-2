@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 
 @inject IUsersClient usersClient;
+@inject AuthenticationStateProvider authProvider;
 @attribute [Authorize]
 
 <PageTitle>User settings</PageTitle>
@@ -13,15 +14,10 @@
     {
         <span>Loading...</span>
     }
-    else if (!userExists)
-    {
-        <span>Couldn't fetch data...</span>
-    }
     else
     {
         <section class="user-settings  p-4 shadow-sm">
-            <div class="user-settings__item d-flex flex-row align-items-baseline gap-1"><span class="text-secondary">Username:</span> <h5 class="fs-6 fw-bold">@user.Name</h5></div>
-            <div class="user-settings__item d-flex flex-row align-items-baseline gap-1"><span class="text-secondary">Email:</span> <h5 class="fs-6 fw-bold">@user.Email</h5></div>
+            <div class="user-settings__item d-flex flex-row align-items-baseline gap-1"><span class="text-secondary">Username:</span> <h5 class="fs-6 fw-bold">@userName</h5></div>
             <span>
                 You are currently <b>@(user.IsSubscribed ? "subscribed" : "not subscribed")</b> to our monthly email reports!
             </span>

@@ -1,6 +1,7 @@
 ﻿using ArkFunds.App.Web.Api;
 
 namespace ArkFunds.App.Web.Pages;
+
 public partial class Reports
 {
     private Report report;

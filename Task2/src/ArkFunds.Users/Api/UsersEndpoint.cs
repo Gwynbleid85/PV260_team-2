@@ -1,8 +1,10 @@
+using System.Security.Claims;
 using ArkFunds.Users.Application.Commands;
 using ArkFunds.Users.Core;
 using ArkFunds.Users.Core.Events;
 using Mapster;
 using Marten;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Wolverine;
 using Wolverine.Http;
@@ -12,11 +14,8 @@ namespace ArkFunds.Users.Api;
 
 public record UserEmailChangedRequest(string UserEmail);
 
-public record NewUserRequest(string Name, string Email);
-
 public class UsersEndpoint
 {
-    //TODO: Add authorization
     /// <summary>
     /// Get user by ID
     /// </summary>
@@ -28,21 +27,26 @@ public class UsersEndpoint
         return user;
     }
 
-    //TODO: remove before production
     /// <summary>
     /// Create test user
     /// </summary>
     /// <param name="request"></param>
     /// <param name="bus"></param>
+    /// <param name="httpContextAccessor"></param>
     /// <returns>user</returns>
     [WolverinePost("/users")]
-    public static async Task<NewUserCreated> UserCreate(NewUserRequest request, IMessageBus bus)
+    public static async Task<NewUserCreated> UserCreate(IMessageBus bus, IHttpContextAccessor httpContextAccessor)
     {
-        var command = request.Adapt<CreateNewUserCommand>();
+        var userIdClaim = httpContextAccessor.HttpContext?.User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        if (userIdClaim is null)
+        {
+            throw new UnauthorizedAccessException();
+        }
+        
+        var command = new CreateNewUserCommand(userIdClaim);
         return await bus.InvokeAsync<NewUserCreated>(command);
     }
 
-    //TODO: Add authorization
     /// <summary>
     /// Delete user by ID
     /// </summary>
@@ -56,7 +60,6 @@ public class UsersEndpoint
         return await bus.InvokeAsync<UserDeleted>(command);
     }
 
-    //TODO: Add authorization
     /// <summary>
     /// Change user email
     /// </summary>
@@ -72,7 +75,6 @@ public class UsersEndpoint
         return await bus.InvokeAsync<UserEmailChanged>(command);
     }
 
-    //TODO: Add authorization
     /// <summary>
     /// Subscribe user
     /// </summary>

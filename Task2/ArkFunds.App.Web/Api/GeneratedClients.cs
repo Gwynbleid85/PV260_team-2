@@ -262,7 +262,7 @@ namespace ArkFunds.App.Web.Api
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<Report> ThreeMonthsOldAsync(System.Threading.CancellationToken cancellationToken)
         {
-            var client_ = _httpClient;
+            var client_ = new HttpClient();
             var disposeClient_ = false;
             try
             {

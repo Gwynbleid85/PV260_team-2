@@ -11,7 +11,6 @@ namespace ArkFunds.Reports.Api;
 
 public class ReportsEndpoint
 {
-    //TODO: Add authorization
     /// <summary>
     /// Get current report
     /// </summary>
@@ -42,17 +41,15 @@ public class ReportsEndpoint
         var query = new GetThreeMonthOldReportQuery(timeProvider.GetCurrentTime());
 
         var queryResponse = await bus.InvokeAsync<GetThreeMonthOldReportQuery.Response>(query);
-        return queryResponse.Report;
+        return queryResponse?.Report;
     }
 
-    //TODO: Add authorization
     /// <summary>
     /// Get report history
     /// </summary>
     /// <param name="bus"></param>
     /// <remarks>User has to be logged in for this endpoint</remarks>
     /// <returns>Report history</returns>
-    [AllowAnonymous]
     [WolverineGet("/reports/history")]
     public static async Task<IEnumerable<Report>> GetReportHistory(IMessageBus bus)
     {
