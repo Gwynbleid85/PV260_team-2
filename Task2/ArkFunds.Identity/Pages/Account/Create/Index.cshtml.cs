@@ -46,7 +46,7 @@ public class Index : PageModel
             if (context == null)
             {
                 // since we don't have a valid context, then we just go back to the home page
-                return Redirect("~/");
+                return Redirect(Input.ReturnUrl ?? "/~");
             }
             
             await interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
