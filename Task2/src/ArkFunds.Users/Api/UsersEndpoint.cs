@@ -1,6 +1,7 @@
 using ArkFunds.Users.Application.Commands;
 using ArkFunds.Users.Core;
 using ArkFunds.Users.Core.Events;
+using Mapster;
 using Marten;
 using Microsoft.AspNetCore.Mvc;
 using Wolverine;
@@ -11,6 +12,8 @@ namespace ArkFunds.Users.Api;
 
 public record UserEmailChangedRequest(string UserEmail);
 
+public record NewUserRequest(string Name, string Email);
+
 public class UsersEndpoint
 {
     //TODO: Add authorization
@@ -20,26 +23,25 @@ public class UsersEndpoint
     /// <param name="user"></param>
     /// <returns>user</returns>
     [WolverineGet("/users/{id}")]
-    public static User UserGet([Document]User user)
+    public static User UserGet([Document] User user)
     {
         return user;
     }
-    
+
     //TODO: remove before production
     /// <summary>
     /// Create test user
     /// </summary>
-    /// <param name="session"></param>
+    /// <param name="request"></param>
+    /// <param name="bus"></param>
     /// <returns>user</returns>
     [WolverinePost("/users")]
-    public static async Task<User> UserCreate(IDocumentSession session)
+    public static async Task<NewUserCreated> UserCreate(NewUserRequest request, IMessageBus bus)
     {
-        var user = new User{Id = Guid.NewGuid(), Name = "John Doe", IsSubscribed = false, Email = "test@test.cz"};
-        session.Store(user);
-        await session.SaveChangesAsync();
-        return user;
+        var command = request.Adapt<CreateNewUserCommand>();
+        return await bus.InvokeAsync<NewUserCreated>(command);
     }
-    
+
     //TODO: Add authorization
     /// <summary>
     /// Delete user by ID
@@ -53,7 +55,7 @@ public class UsersEndpoint
         var command = new DeleteUserCommand(id);
         return await bus.InvokeAsync<UserDeleted>(command);
     }
-    
+
     //TODO: Add authorization
     /// <summary>
     /// Change user email
@@ -63,12 +65,13 @@ public class UsersEndpoint
     /// <param name="bus"></param>
     /// <returns>id, email</returns>
     [WolverinePut("/users/{id}/email")]
-    public static async Task<UserEmailChanged> UserChangeEmail(Guid id, UserEmailChangedRequest request, IMessageBus bus)
+    public static async Task<UserEmailChanged> UserChangeEmail(Guid id, UserEmailChangedRequest request,
+        IMessageBus bus)
     {
         var command = new ChangeUserEmailCommand(id, request.UserEmail);
         return await bus.InvokeAsync<UserEmailChanged>(command);
     }
-    
+
     //TODO: Add authorization
     /// <summary>
     /// Subscribe user
