@@ -1,7 +1,9 @@
 ﻿@page "/user"
 @using ArkFunds.App.Web.Api
+@using Microsoft.AspNetCore.Authorization
 
 @inject IUsersClient usersClient;
+@attribute [Authorize]
 
 <PageTitle>User settings</PageTitle>
 

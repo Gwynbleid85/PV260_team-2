@@ -2,9 +2,9 @@
 
 @using System.Globalization
 @using ArkFunds.App.Web.Api
+@using Microsoft.AspNetCore.Authorization
 @inject IReportsClient reportsClient;
-@inject AuthenticationStateProvider authProvider;
-
+@attribute [Authorize]
 <PageTitle>History</PageTitle>
 
 <h1 class="fs-3">Report History</h1>
@@ -24,8 +24,16 @@ else
         }
         @foreach (var report in history)
         {
-            <div class="history-item shadow-sm" @onclick="() => ToggleTable(report.Id)">
+            <div class="history-item shadow-sm d-flex flex-row justify-content-between align-items-center" @onclick="() => ToggleTable(report.Id)">
                 <b class="text-secondary"> @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(report.Month) @report.Year</b>
+                @if (isActive[report.Id])
+                {
+                    <RadzenIcon Icon="expand_less" style="font-weight: 600;" />
+                }
+                else
+                {
+                    <RadzenIcon Icon="expand_more" style="font-weight: 600;" />
+                }
             </div>
             <div class="@(isActive[report.Id] ? "collapse.show" : "collapse")">
                 <ReportTables Report="report" />
