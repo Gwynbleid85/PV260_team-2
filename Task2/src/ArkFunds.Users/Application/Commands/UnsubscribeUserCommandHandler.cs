@@ -8,7 +8,7 @@ namespace ArkFunds.Users.Application.Commands;
 
 public class UnsubscribeUserCommandHandler
 {
-    public static async Task<User> LoadAsync(SubscribeUserCommand command, IQuerySession session)
+    public static async Task<User> LoadAsync(UnsubscribeUserCommand command, IQuerySession session)
     {
         var user = await session.LoadAsync<User>(command.UserId);
         Guard.IsNotNull(user);

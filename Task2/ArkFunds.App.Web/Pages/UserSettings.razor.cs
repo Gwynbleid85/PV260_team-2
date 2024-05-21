@@ -27,10 +27,16 @@ public partial class UserSettings
             isLoading = false;
         }
     }
-
-    public async Task ToggleSubscriptionSettingAsync()
+    
+    public async Task Subscribe()
     {
         await usersClient.SubscriptionAsync(user.Id);
+        user = await usersClient.UsersGetAsync(user.Id);
+    }
+
+    public async Task UnSubscribe()
+    {
+        await usersClient.UnsubscriptionAsync(user.Id);
         user = await usersClient.UsersGetAsync(user.Id);
     }
 
