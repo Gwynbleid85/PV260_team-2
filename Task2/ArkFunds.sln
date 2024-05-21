@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.Identity", "src\Ar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArkFunds.App.Web", "src\ArkFunds.App.Web\ArkFunds.App.Web.csproj", "{10FF9BAA-39D5-4293-8B94-28CA8D1AE7EE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArkFunds.Tests", "src\ArkFunds.Tests\ArkFunds.Tests.csproj", "{10FF9BAA-39D5-4293-8B94-28CA8D1AE7E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,11 @@ Global
 		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		
+		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10FF9BAA-39D5-4293-8B94-28CA8D1AE7E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
