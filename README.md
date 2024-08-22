@@ -13,3 +13,4 @@ This repository contains solution for projects from PV260 subject.
 
 ---
 ## Solutions:
+* [Task1](Task1/Task1.md)

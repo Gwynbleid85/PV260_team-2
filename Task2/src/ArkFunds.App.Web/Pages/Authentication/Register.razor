@@ -1,0 +1,14 @@
+﻿@page "/authentication/register"
+@using ArkFunds.App.Web.Api
+@using Microsoft.AspNetCore.Authorization
+@inject IUsersClient UsersClient
+@inject NavigationManager Navigation
+@attribute [Authorize]
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await UsersClient.UsersPostAsync();
+        Navigation.NavigateTo("/");
+    }
+}
